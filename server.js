@@ -9,6 +9,7 @@ const AppError = require('./utils/appError');
 
 const journalRoute = require('./routes/journals');
 const authRoute = require('./routes/auth');
+const userRoute = require('./routes/auth');
 
 process.on('uncaughtException', (err) => {
   console.log('UNHANDLED REJECTION! Shutting down...');
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use('/api/v1/journals', journalRoute);
 app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/user', userRoute);
 
 app.get('*', (req, res, next) => {
   return next(
