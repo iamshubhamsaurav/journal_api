@@ -29,8 +29,11 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const { name, email, password } = req.body;
-  const user = await User.create({ name, email, password });
+  if (req.body.role === 'admin') {
+    return next(new AppError('user role cannot be set to admin', 403));
+  }
+  const { name, email, password, role } = req.body;
+  const user = await User.create({ name, email, password, role });
   createSendToken(user, 201, res);
 });
 
