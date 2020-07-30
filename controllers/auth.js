@@ -25,13 +25,8 @@ const createSendToken = (user, statusCode, res) => {
   res.cookie('jwt', token, cookieOptions);
   //Remove the password from output
   user.password = undefined;
-  res.status(200).json({ success: true, token, data: user });
+  res.status(statusCode).json({ success: true, token, data: user });
 };
-
-exports.signup = catchAsync(async (req, res, next) => {
-  const user = await User.create(req.body);
-  createSendToken(user, 201, res);
-});
 
 exports.signup = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
